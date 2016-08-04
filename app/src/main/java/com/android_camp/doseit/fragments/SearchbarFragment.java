@@ -15,14 +15,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android_camp.doseit.DataBaseHelper;
+import com.android_camp.doseit.Medicine;
 import com.android_camp.doseit.R;
 import com.android_camp.doseit.fragments.adapter.ListAdapter;
+import com.firebase.client.Firebase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +34,22 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SearchbarFragment extends Fragment implements View.OnClickListener {
+public class SearchbarFragment extends Fragment
+        implements View.OnClickListener,
+        DataBaseHelper.Help {
+
+    public interface CallbackFromSearchFragment {
+        void onSelectedMedicine(Medicine m);
+    }
 
     private EditText mTextInput;
     private ImageButton mSpeakSearchBtn;
     private ImageButton mTextSearchBtn;
     private ListView mMedicineList;
+    private CallbackFromSearchFragment mCallback;
     private ListAdapter mListAdapter;
+    private ArrayList<Medicine> mList = null;
+    private Medicine clickedOn;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +68,12 @@ public class SearchbarFragment extends Fragment implements View.OnClickListener 
         mSpeakSearchBtn.setOnClickListener(this);
         mMedicineList = (ListView) view.findViewById(R.id.list_meds);
         mListAdapter = new ListAdapter(getContext());
-        mMedicineList.setAdapter(mListAdapter);
+        Firebase.setAndroidContext(getContext());
+
+        DataBaseHelper database = new DataBaseHelper();
+        database.initDataBase(this);
+
+
 
         mTextInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -125,5 +143,34 @@ public class SearchbarFragment extends Fragment implements View.OnClickListener 
     private void textSearch(CharSequence s) {
         mListAdapter.getFilter().filter(s);
         mTextInput.setText("");
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (CallbackFromSearchFragment) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
+    }
+
+    @Override
+    public void dealWithData(ArrayList<Medicine> l) {
+        Log.d("MSG", "dealWithDataWorks");
+        mList = l;
+        mListAdapter.setMedicineList(mList);
+        mMedicineList.setAdapter(mListAdapter);
+
+        mMedicineList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> listView, View itemView, int itemPosition, long itemId)
+            {
+                mCallback.onSelectedMedicine((Medicine)((ListAdapter)listView.getAdapter()).getItem(itemPosition));
+            }
+        });
     }
 }
