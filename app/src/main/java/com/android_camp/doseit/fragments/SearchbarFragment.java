@@ -1,4 +1,4 @@
-package com.android_camp.doseit;
+package com.android_camp.doseit.fragments;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import com.android_camp.doseit.R;
 
 import java.util.ArrayList;
 import java.util.Locale;
