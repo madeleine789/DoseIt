@@ -1,27 +1,30 @@
 package com.android_camp.doseit.fragments.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 /**
  * Created by demouser on 8/4/16.
  */
-public class ListAdapter extends BaseAdapter {
+public class ListAdapter extends BaseAdapter implements Filterable {
 
     private ArrayList<String> mMedicineList;
     private Context mContext;
+    private Filter mFilter;
 
     public ListAdapter(Context ctx) {
         mMedicineList = new ArrayList<String>();
+        mFilter = new MyFilter();
         mMedicineList.add("Rubbish #1");
-        mMedicineList.add("Rubbish #2");
+        mMedicineList.add("Rubbiandsh #2");
         mMedicineList.add("Rubbish #3");
         mMedicineList.add("Rubbish #4");
         mMedicineList.add("Rubbish #5");
@@ -31,6 +34,10 @@ public class ListAdapter extends BaseAdapter {
     public void setMedicineList(ArrayList<String> list) {
         mMedicineList = list;
         notifyDataSetChanged();
+    }
+
+    public ArrayList<String> getMedicineList() {
+        return mMedicineList;
     }
 
     @Override
@@ -59,5 +66,32 @@ public class ListAdapter extends BaseAdapter {
         tv.setTextSize(30);
         tv.setText(getItem(i).toString());
         return tv;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return mFilter;
+    }
+
+    private class MyFilter extends Filter {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            FilterResults result = new FilterResults();
+            ArrayList<String> newList = new ArrayList<>();
+            for (String medicine : mMedicineList) {
+                if (medicine.toLowerCase().contains(charSequence.subSequence(0, charSequence.length() - 1).toString().toLowerCase())) {
+                    newList.add(medicine);
+                }
+            }
+            
+            result.values = newList;
+            return result;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            setMedicineList((ArrayList<String>)filterResults.values);
+        }
     }
 }

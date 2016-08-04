@@ -7,21 +7,28 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android_camp.doseit.R;
 import com.android_camp.doseit.fragments.adapter.ListAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SearchbarFragment extends Fragment implements View.OnClickListener {
 
@@ -30,6 +37,12 @@ public class SearchbarFragment extends Fragment implements View.OnClickListener 
     private ImageButton mTextSearchBtn;
     private ListView mMedicineList;
     private ListAdapter mListAdapter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 
     @Nullable
     @Override
@@ -43,6 +56,25 @@ public class SearchbarFragment extends Fragment implements View.OnClickListener 
         mMedicineList = (ListView) view.findViewById(R.id.list_meds);
         mListAdapter = new ListAdapter(getContext());
         mMedicineList.setAdapter(mListAdapter);
+
+        mTextInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if (s.length() > 0 && s.subSequence(s.length() - 1, s.length()).toString().equalsIgnoreCase("\n")) {
+                    textSearch(s);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         return view;
     }
 
@@ -50,7 +82,7 @@ public class SearchbarFragment extends Fragment implements View.OnClickListener 
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.text_search:
-                textSearch();
+                textSearch(mTextInput.getText());
                 break;
             case R.id.voice_search:
                 voiceSearch();
@@ -90,7 +122,8 @@ public class SearchbarFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    private void textSearch() {
-
+    private void textSearch(CharSequence s) {
+        mListAdapter.getFilter().filter(s);
+        mTextInput.setText("");
     }
 }
