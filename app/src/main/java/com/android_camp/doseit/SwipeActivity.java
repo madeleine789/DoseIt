@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.android_camp.doseit.fragments.FragmentDummy;
 import com.android_camp.doseit.fragments.FragmentMedsList;
@@ -13,7 +16,7 @@ import com.android_camp.doseit.fragments.FragmentParameters;
 import com.android_camp.doseit.fragments.FragmentResult;
 import com.android_camp.doseit.fragments.SearchbarFragment;
 
-public class SwipeActivity extends AppCompatActivity {
+public class SwipeActivity extends BaseActivity {
 
     private static final int NO_SWIPER_PAGES = 3;
 
@@ -24,6 +27,7 @@ public class SwipeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
+        initToolBar();
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mViewPager.setAdapter(mViewPagerAdapter);
@@ -60,4 +64,5 @@ public class SwipeActivity extends AppCompatActivity {
             return NO_SWIPER_PAGES;
         }
     }
+
 }
