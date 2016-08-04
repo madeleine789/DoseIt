@@ -27,11 +27,36 @@
             <RadioButton
                 android:id="@+id/male"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/male"/>
             <RadioButton
                 android:id="@+id/female"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/female"/>
+        </RadioGroup>
+    </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/age"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioGroup
+            android:id="@+id/age_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/kid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/child"/>
+            <RadioButton
+                android:id="@+id/adult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/adult"/>
         </RadioGroup>
     </RelativeLayout>
     <TextView
