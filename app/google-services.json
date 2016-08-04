@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "323144803351",
+    "firebase_url": "https://doseit-f8672.firebaseio.com",
+    "project_id": "doseit-f8672",
+    "storage_bucket": "doseit-f8672.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323144803351:android:3c9db23a91395aca",
+        "android_client_info": {
+          "package_name": "com.android_camp.doseit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323144803351-ti9n1sijhak535a94lqunaitatb92u7r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android_camp.doseit",
+            "certificate_hash": "CCCE3F9FF89A116429F5D8CC167FA45A9D3F8AA9"
+          }
+        },
+        {
+          "client_id": "323144803351-nbj2la0api3022fqemc6n1phhvhf3gs9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXGp1mZ9YGM2h6Dx37AgDxHrokshMn5ck"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323144803351-nbj2la0api3022fqemc6n1phhvhf3gs9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
