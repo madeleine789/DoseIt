@@ -6,13 +6,13 @@ package com.android_camp.doseit;
 
 public class Medicine
 {
-    String wariningMessage;
-    double concentration;
-    double dose, kidDose;
-    String name;
+    public String warningMessage;
+    public double concentration;
+    public double dose, kidDose;
+    public String name;
 
-    public void setWariningMessage(String message) {
-        wariningMessage = message;
+    public void setWarningMessage(String message) {
+        warningMessage = message;
     }
 
     public void setConcentration(double con) {
@@ -29,5 +29,11 @@ public class Medicine
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double computeResult(String age, double height, double weight) {
+        double d = (age == "kid")  ? kidDose : dose;
+        double h = (height < 10) ? height * 100 : height;
+        return 0.01 + concentration * d * (h / weight);
     }
 }
