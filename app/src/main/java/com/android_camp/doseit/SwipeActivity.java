@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 
@@ -16,12 +17,13 @@ import com.android_camp.doseit.fragments.FragmentParameters;
 import com.android_camp.doseit.fragments.FragmentResult;
 import com.android_camp.doseit.fragments.SearchbarFragment;
 
-public class SwipeActivity extends BaseActivity {
+public class SwipeActivity extends BaseActivity implements FragmentParameters.callBack{
 
     private static final int NO_SWIPER_PAGES = 3;
 
     private ViewPagerAdapter mViewPagerAdapter;
     private ViewPager mViewPager;
+    private Parameter mParameter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,11 @@ public class SwipeActivity extends BaseActivity {
         public int getCount() {
             return NO_SWIPER_PAGES;
         }
+    }
+
+    @Override
+    public void getParameters(Parameter p) {
+        mParameter = p;
     }
 
 }
