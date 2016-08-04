@@ -11,10 +11,13 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initToolBar();
     }
 
     public void onClickBtn(View view) {
@@ -26,6 +29,19 @@ public class MainActivity extends AppCompatActivity {
         }
         startActivity(intent);
     }
+
+    public void initToolBar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.app_name);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_doseit);
+        /*toolbar.setNavigationOnClickListener(
+        new View.OnClickListener() {
+
+        }
+        );*/
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
