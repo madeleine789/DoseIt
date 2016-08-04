@@ -1,20 +1,15 @@
 package com.android_camp.doseit;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-
 import com.android_camp.doseit.fragments.FragmentDummy;
 import com.android_camp.doseit.fragments.FragmentParameters;
 import com.android_camp.doseit.fragments.FragmentResult;
 import com.android_camp.doseit.fragments.FragmentSearchbar;
-
-
 public class SwipeActivity extends BaseActivity implements FragmentParameters.callBack,
         FragmentSearchbar.CallbackFromSearchFragment {
-
     private static final int NO_SWIPER_PAGES = 3;
     private Medicine mSelectedMed;
     private ViewPagerAdapter mViewPagerAdapter;
@@ -23,8 +18,6 @@ public class SwipeActivity extends BaseActivity implements FragmentParameters.ca
     private FragmentResult frag;
     private FragmentParameters mParametersFrag;
     private Parameter mParameter;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +27,6 @@ public class SwipeActivity extends BaseActivity implements FragmentParameters.ca
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mViewPager.setAdapter(mViewPagerAdapter);
     }
-
     @Override
     public void onSelectedMedicine(Medicine m) {
         mSelectedMed = m;
@@ -44,19 +36,13 @@ public class SwipeActivity extends BaseActivity implements FragmentParameters.ca
         frag.setMedName(mSelectedMed.name);
         frag.setWarning(mSelectedMed.warningMessage);
     }
-
     public void setCurrentItem (int item, boolean smoothScroll) {
         mViewPager.setCurrentItem(item, smoothScroll);
     }
-
-
     public class ViewPagerAdapter extends FragmentPagerAdapter {
-
         public ViewPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
-
         @Override
         public Fragment getItem(int position) {
             Fragment fragment;
@@ -78,16 +64,13 @@ public class SwipeActivity extends BaseActivity implements FragmentParameters.ca
             }
             return fragment;
         }
-
         @Override
         public int getCount() {
             return NO_SWIPER_PAGES;
         }
     }
-
     @Override
     public void getParameters(Parameter p) {
         mParameter = p;
     }
-
 }

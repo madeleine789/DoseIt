@@ -30,7 +30,6 @@ public class ListAdapter extends BaseAdapter implements Filterable {
         mMedicineList = list;
         notifyDataSetChanged();
     }
-
     public ArrayList<Medicine> getMedicineList() {
         return mMedicineList;
     }
@@ -60,6 +59,7 @@ public class ListAdapter extends BaseAdapter implements Filterable {
         }
         tv.setTextSize(30);
         tv.setText(((Medicine)getItem(i)).name);
+
         return tv;
     }
 
@@ -78,6 +78,7 @@ public class ListAdapter extends BaseAdapter implements Filterable {
                 String medicine = med.name;
                 if (medicine.toLowerCase().contains(charSequence.subSequence(0, charSequence.length() - 1).toString().toLowerCase())) {
                     newList.add(med);
+
                 }
             }
             
@@ -88,6 +89,7 @@ public class ListAdapter extends BaseAdapter implements Filterable {
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
             setMedicineList((ArrayList<Medicine>)filterResults.values);
+
         }
     }
 }
