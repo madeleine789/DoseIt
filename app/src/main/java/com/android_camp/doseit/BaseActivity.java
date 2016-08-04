@@ -1,11 +1,12 @@
 package com.android_camp.doseit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
-
+import android.view.View;
 
 /**
  * Created by demouser on 8/4/16.
@@ -21,11 +22,15 @@ public class BaseActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorText));
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_doselt);
-        /*toolbar.setNavigationOnClickListener(
+        toolbar.setNavigationOnClickListener(
         new View.OnClickListener() {
-
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BaseActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
         }
-        );*/
+        );
     }
 
 
