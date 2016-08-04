@@ -11,6 +11,7 @@ import com.android_camp.doseit.fragments.FragmentDummy;
 import com.android_camp.doseit.fragments.FragmentMedsList;
 import com.android_camp.doseit.fragments.FragmentParameters;
 import com.android_camp.doseit.fragments.FragmentResult;
+import com.android_camp.doseit.fragments.SearchbarFragment;
 
 public class SwipeActivity extends AppCompatActivity {
 
@@ -42,7 +43,7 @@ public class SwipeActivity extends AppCompatActivity {
                     fragment = new FragmentParameters();
                     break;
                 case 1:
-                    fragment = new FragmentMedsList();
+                    fragment = new SearchbarFragment();
                     break;
                 case 2:
                     fragment = new FragmentResult();
