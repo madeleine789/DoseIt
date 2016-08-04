@@ -16,7 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:src="@drawable/ic_camera_alt_black_24dp"
+        android:onClick="onClickBtn"
+        android:src="@drawable/ic_search_black_24dp"
         />
 
     <ImageButton
@@ -26,7 +27,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_toLeftOf="@id/text_search_btn"
-        android:src="@drawable/ic_search_black_24dp"
+        android:src="@drawable/ic_settings_voice_black_24dp"
         />
 
     <ImageButton
@@ -35,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_settings_voice_black_24dp"
+        android:src="@drawable/ic_camera_alt_black_24dp"
         />
 
 </RelativeLayout>
