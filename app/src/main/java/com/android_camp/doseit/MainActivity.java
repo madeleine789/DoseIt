@@ -9,8 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import com.android_camp.doseit.BaseActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     public static Toolbar toolbar;
 
@@ -31,24 +32,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void initToolBar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.app_name);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.colorText));
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_doselt);
-        /*toolbar.setNavigationOnClickListener(
-        new View.OnClickListener() {
-
-        }
-        );*/
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        return true;
-    }
 }

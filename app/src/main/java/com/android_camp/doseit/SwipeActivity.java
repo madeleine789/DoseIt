@@ -16,7 +16,7 @@ import com.android_camp.doseit.fragments.FragmentParameters;
 import com.android_camp.doseit.fragments.FragmentResult;
 import com.android_camp.doseit.fragments.SearchbarFragment;
 
-public class SwipeActivity extends AppCompatActivity {
+public class SwipeActivity extends BaseActivity {
 
     private static final int NO_SWIPER_PAGES = 3;
 
@@ -27,6 +27,7 @@ public class SwipeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
+        initToolBar();
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mViewPager.setAdapter(mViewPagerAdapter);
