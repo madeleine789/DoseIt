@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.ImageButton;
+
 import com.android_camp.doseit.BaseActivity;
 
 public class MainActivity extends BaseActivity {
@@ -28,6 +30,10 @@ public class MainActivity extends BaseActivity {
             case R.id.text_search_btn:
                 intent = new Intent(this, SwipeActivity.class);
                 break;
+            case R.id.voice_search_btn:
+                intent = new Intent(getApplicationContext(), VoiceActivity.class);
+                break;
+
         }
         startActivity(intent);
     }

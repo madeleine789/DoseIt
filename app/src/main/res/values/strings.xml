@@ -17,4 +17,7 @@
     <string name="text_search_hint">Proceed to text search</string>
     <string name="photo_search_hint">Proceed to camera</string>
     <string name="voice_mode_hint">Proceed to voice mode</string>
+    <string name="speech_start">Talk!</string>
+    <string name="male_or_female">Male or Female</string>
+    <string name="_0_120">0-120</string>
 </resources>

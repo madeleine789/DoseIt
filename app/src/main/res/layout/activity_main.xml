@@ -79,6 +79,7 @@
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:hint="@string/photo_search_hint"
+                android:onClick="onClickBtn"
                 />
 
             <ImageButton
@@ -95,6 +96,7 @@
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:hint="@string/voice_mode_hint"
+                android:onClick="onClickBtn"
                 />
 
         </LinearLayout>
