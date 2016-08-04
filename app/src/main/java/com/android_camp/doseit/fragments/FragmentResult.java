@@ -1,12 +1,13 @@
 package com.android_camp.doseit.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.TextViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.android_camp.doseit.R;
@@ -23,9 +24,13 @@ public class FragmentResult extends Fragment {
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_result, container, false);
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(container.getWindowToken(), 0);
+
         mResult = (TextView) view.findViewById(R.id.result_value);
         mMedicine = (TextView) view.findViewById(R.id.medicin_name);
         mWarning = (TextView) view.findViewById(R.id.warning);
+
         mResult.setText(String.valueOf(answer));
         mMedicine.setText(name);
         mWarning.setText(warn);
@@ -54,7 +59,7 @@ public class FragmentResult extends Fragment {
        answer = result;
         if(mResult != null)
         {
-            mResult.setText(String.valueOf(result));
+            mResult.setText(String.format("%.5g%n", result) + " mg");
         }
     }
 }

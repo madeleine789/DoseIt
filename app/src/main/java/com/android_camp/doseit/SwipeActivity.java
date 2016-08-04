@@ -2,7 +2,6 @@ package com.android_camp.doseit;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -10,11 +9,11 @@ import android.support.v4.view.ViewPager;
 import com.android_camp.doseit.fragments.FragmentDummy;
 import com.android_camp.doseit.fragments.FragmentParameters;
 import com.android_camp.doseit.fragments.FragmentResult;
-import com.android_camp.doseit.fragments.SearchbarFragment;
+import com.android_camp.doseit.fragments.FragmentSearchbar;
 
-public class SwipeActivity extends FragmentActivity
-        implements SearchbarFragment.CallbackFromSearchFragment
-{
+
+public class SwipeActivity extends BaseActivity implements FragmentParameters.callBack,
+        FragmentSearchbar.CallbackFromSearchFragment {
 
     private static final int NO_SWIPER_PAGES = 3;
     private Medicine mSelectedMed;
@@ -22,12 +21,15 @@ public class SwipeActivity extends FragmentActivity
     private ViewPager mViewPager;
     private double mResult;
     private FragmentResult frag;
+    private FragmentParameters mParametersFrag;
+    private Parameter mParameter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
-        //initToolBar();
+        initToolBar();
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mViewPager.setAdapter(mViewPagerAdapter);
@@ -36,33 +38,11 @@ public class SwipeActivity extends FragmentActivity
     @Override
     public void onSelectedMedicine(Medicine m) {
         mSelectedMed = m;
-        mResult = 10; //computeResult();
-        // Create new fragment and transaction
-        //Fragment f = getSupportFragmentManager().findFragmentById(R.id.result_fragment);
-        // Fragment f = (FragmentResult) getSupportFragmentManager().findFragmentById(R.id.result_fragment);
-
-            /*if(f == null)
-                System.out.println("ERROR");
-            ((FragmentResult)f).answer = 10;
-            android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_search, f).commit();
-            System.out.println("Suntem in Swipe" + mSelectedMed.name);*/
-
+        mResult = mSelectedMed.computeResult(mParameter.age, mParameter.height, mParameter.weight);
         setCurrentItem(2,true);
-        frag.setResult(10);
-        frag.setMedName(m.name);
-        frag.setWarning(m.warningMessage);
-
-        // current fragment
-
-        //        ((FragmentResult) f).setResult(mResult);
-    }
-
-    public double computeResult() {
-        double concentration = mSelectedMed.concentration;
-        double dose = mSelectedMed.dose;
-        double kidDose = mSelectedMed.kidDose;
-        return 0;
+        frag.setResult(mResult);
+        frag.setMedName(mSelectedMed.name);
+        frag.setWarning(mSelectedMed.warningMessage);
     }
 
     public void setCurrentItem (int item, boolean smoothScroll) {
@@ -82,10 +62,11 @@ public class SwipeActivity extends FragmentActivity
             Fragment fragment;
             switch (position) {
                 case 0:
-                    fragment = new FragmentParameters();
+                    mParametersFrag = new FragmentParameters();
+                    fragment = mParametersFrag;
                     break;
                 case 1:
-                    fragment = new SearchbarFragment();
+                    fragment = new FragmentSearchbar();
                     break;
                 case 2:
                     frag = new FragmentResult();
@@ -102,6 +83,11 @@ public class SwipeActivity extends FragmentActivity
         public int getCount() {
             return NO_SWIPER_PAGES;
         }
+    }
+
+    @Override
+    public void getParameters(Parameter p) {
+        mParameter = p;
     }
 
 }

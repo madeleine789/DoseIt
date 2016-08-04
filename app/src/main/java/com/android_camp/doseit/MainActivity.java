@@ -4,10 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.firebase.client.Firebase;
-
-import java.util.List;
-
 public class MainActivity extends BaseActivity {
 
     @Override
@@ -26,12 +22,4 @@ public class MainActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    /*
-    @Override
-    public void dealWithData(List<Medicine> l)
-    {
-        for(Medicine m : l) {
-            System.out.println("aici" + m.name + " " + m.kidDose);
-        }
-    } */
 }

@@ -28,13 +28,19 @@ import com.android_camp.doseit.R;
 import com.android_camp.doseit.fragments.adapter.ListAdapter;
 import com.firebase.client.Firebase;
 
+import com.android_camp.doseit.Parameter;
+import com.android_camp.doseit.R;
+import com.android_camp.doseit.fragments.adapter.ListAdapter;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SearchbarFragment extends Fragment
+public class FragmentSearchbar extends Fragment
         implements View.OnClickListener,
         DataBaseHelper.Help {
 

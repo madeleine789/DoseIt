@@ -30,4 +30,10 @@ public class Medicine
     public void setName(String name) {
         this.name = name;
     }
+
+    public double computeResult(String age, double height, double weight) {
+        double d = (age == "kid")  ? kidDose : dose;
+        double h = (height < 10) ? height * 100 : height;
+        return 0.01 + concentration * d * (h / weight);
+    }
 }

@@ -10,7 +10,6 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.android_camp.doseit.Medicine;
-
 import java.util.ArrayList;
 
 /**
@@ -23,13 +22,7 @@ public class ListAdapter extends BaseAdapter implements Filterable {
     private Filter mFilter;
 
     public ListAdapter(Context ctx) {
-        //mMedicineList = new ArrayList<String>();
         mFilter = new MyFilter();
-        //mMedicineList.add("Rubbish #1");
-        //mMedicineList.add("Rubbiandsh #2");
-        //mMedicineList.add("Rubbish #3");
-        //mMedicineList.add("Rubbish #4");
-        //mMedicineList.add("Rubbish #5");
         mContext = ctx;
     }
 
