@@ -9,34 +9,26 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-import com.android_camp.doseit.DataBaseHelper;
+
+import com.android_camp.doseit.DatabaseHelper;
 import com.android_camp.doseit.Medicine;
 import com.android_camp.doseit.R;
 import com.android_camp.doseit.fragments.adapter.ListAdapter;
 import com.firebase.client.Firebase;
-import com.android_camp.doseit.Parameter;
-import com.android_camp.doseit.R;
-import com.android_camp.doseit.fragments.adapter.ListAdapter;
-import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 public class FragmentSearchbar extends Fragment
         implements View.OnClickListener,
-        DataBaseHelper.Help {
+        DatabaseHelper.Help {
 
 
     public interface CallbackFromSearchFragment {
@@ -67,7 +59,7 @@ public class FragmentSearchbar extends Fragment
         mMedicineList = (ListView) view.findViewById(R.id.list_meds);
         mListAdapter = new ListAdapter(getContext());
         Firebase.setAndroidContext(getContext());
-        DataBaseHelper database = new DataBaseHelper();
+        DatabaseHelper database = new DatabaseHelper();
         database.initDataBase(this);
         mTextInput.addTextChangedListener(new TextWatcher() {
             @Override
