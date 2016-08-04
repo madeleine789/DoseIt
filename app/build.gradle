@@ -3,8 +3,7 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         key {
-            storeFile file('/Users/demouser/DoseIt/sha.key')
-        }
+            storeFile file('/Users/demouser/DoseIt/sha.key') }
     }
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
