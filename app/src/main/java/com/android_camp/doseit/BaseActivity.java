@@ -15,7 +15,6 @@ public class BaseActivity extends AppCompatActivity {
 
     public Toolbar toolbar;
 
-
     public void initToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
@@ -26,8 +25,8 @@ public class BaseActivity extends AppCompatActivity {
         new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BaseActivity.this, MainActivity.class);
-                startActivity(intent);
+                Intent i = new Intent(BaseActivity.this, MainActivity.class);
+                startActivity(i);
             }
         }
         );
