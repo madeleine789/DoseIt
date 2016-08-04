@@ -5,7 +5,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import java.util.ArrayList;
-public class DataBaseHelper {
+public class DatabaseHelper {
     private Firebase ref;
     public interface Help {
         void dealWithData(ArrayList<Medicine> l);
