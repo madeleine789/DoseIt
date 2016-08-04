@@ -1,6 +1,7 @@
 package com.android_camp.doseit;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +12,7 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
+    public static Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +34,9 @@ public class MainActivity extends AppCompatActivity {
     public void initToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorText));
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_doseit);
+        toolbar.setNavigationIcon(R.drawable.ic_doselt);
         /*toolbar.setNavigationOnClickListener(
         new View.OnClickListener() {
 
