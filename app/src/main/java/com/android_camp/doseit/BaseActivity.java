@@ -20,7 +20,7 @@ public class BaseActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.app_name);
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorText));
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_doselt);
+        toolbar.setNavigationIcon(R.drawable.ic_doseit_smallest);
         toolbar.setNavigationOnClickListener(
         new View.OnClickListener() {
             @Override
