@@ -26,14 +26,14 @@ import com.firebase.client.Firebase;
 
 import java.util.ArrayList;
 import java.util.Locale;
-public class FragmentSearchbar extends Fragment
-        implements View.OnClickListener,
-        DatabaseHelper.Help {
+
+public class FragmentSearchbar extends Fragment implements View.OnClickListener, DatabaseHelper.Help {
 
 
     public interface CallbackFromSearchFragment {
         void onSelectedMedicine(Medicine m);
     }
+
     private EditText mTextInput;
     private ImageButton mSpeakSearchBtn;
     private ImageButton mTextSearchBtn;
@@ -42,6 +42,7 @@ public class FragmentSearchbar extends Fragment
     private ListAdapter mListAdapter;
     private ArrayList<Medicine> mList = null;
     private Medicine clickedOn;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

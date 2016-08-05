@@ -12,9 +12,6 @@ import android.widget.TextView;
 
 import com.android_camp.doseit.R;
 
-/**
- * Created by demouser on 8/4/16.
- */
 public class FragmentResult extends Fragment {
     private double answer = 0;
     private String name = "";
@@ -61,5 +58,17 @@ public class FragmentResult extends Fragment {
         {
             mResult.setText(String.format("%.5g%n", result) + " mg");
         }
+    }
+
+    public double getAnswer() {
+        return answer;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getWarn() {
+        return warn;
     }
 }
