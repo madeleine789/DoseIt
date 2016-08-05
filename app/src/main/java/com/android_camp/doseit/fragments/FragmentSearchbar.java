@@ -2,8 +2,10 @@ package com.android_camp.doseit.fragments;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.speech.RecognizerIntent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,11 +17,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,7 +34,6 @@ import com.android_camp.doseit.fragments.adapter.ListAdapter;
 import com.firebase.client.Firebase;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class FragmentSearchbar extends Fragment implements View.OnClickListener, DatabaseHelper.Help {
@@ -52,6 +53,9 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
     private ArrayList<String> mMedName = null;
     private Medicine clickedOn;
     private boolean onTablet = false;
+    private InputMethodManager imm;
+    private IBinder windowToken;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +73,8 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
         mSpeakSearchBtn = (ImageButton) view.findViewById(R.id.voice_search);
         mTextSearchBtn = (ImageButton) view.findViewById(R.id.text_search);
         mTextSearchBtn.setOnClickListener(this);
+        imm = (InputMethodManager)container.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        windowToken = container.getWindowToken();
         mSpeakSearchBtn.setOnClickListener(this);
         mMedicineList = (ListView) view.findViewById(R.id.list_meds);
         mListAdapter = new ListAdapter(getContext());
@@ -95,13 +101,23 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
         mTextInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                if (textView.getTextSize() > 0 && i == EditorInfo.IME_ACTION_SEARCH) {
                     //textSearch(textView.getText());
                     mListAdapter.getFilter().filter(textView.getText());
                     mTextInput.setText("");
                     return true;
                 }
                 return true;
+            }
+        });
+        mTextInput.setOnEditorActionListener(new AutoCompleteTextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    return true;
+                }
+                return false;
             }
         });
         return view;
@@ -111,6 +127,7 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
         switch(view.getId()) {
             case R.id.text_search:
                 textSearch(mTextInput.getText());
+                imm.hideSoftInputFromWindow(windowToken, 0);
                 break;
             case R.id.voice_search:
                 voiceSearch();
@@ -149,8 +166,10 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
     }
     private void textSearch(CharSequence s) {
         Log.e("MSG", "textSearch");
-        mListAdapter.getFilter().filter(s);
-        mTextInput.setText("");
+        if (s.length() > 0) {
+            mListAdapter.getFilter().filter(s);
+            mTextInput.setText("");
+        }
     }
     @Override
     public void onAttach(Activity activity) {
