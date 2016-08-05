@@ -7,13 +7,13 @@ import com.firebase.client.ValueEventListener;
 import java.util.ArrayList;
 public class DatabaseHelper {
     private Firebase ref;
+
     public interface Help {
         void dealWithData(ArrayList<Medicine> l);
     }
     public void initDataBase(final Help h) {
-        Firebase.getDefaultConfig().setPersistenceEnabled(true);
         ref = new Firebase("https://doseit-f8672.firebaseio.com/");
-        if(ref != null) {
+        if(ref != null ) {
             ref.keepSynced(true);
             ref.child("medicine").addValueEventListener(new ValueEventListener() {
                 @Override

@@ -6,7 +6,7 @@
         android:id="@+id/ic_report"
         android:title="Send Report"
         app:showAsAction="always"
-        android:icon="@drawable/ic_priority_high_white_24dp"/>
+        android:icon="@drawable/ic_lightbulb_outline_white_24dp"/>
 
     <item
         android:id="@+id/ic_help"
