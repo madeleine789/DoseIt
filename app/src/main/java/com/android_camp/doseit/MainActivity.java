@@ -76,6 +76,11 @@ public class MainActivity extends BaseActivity {
             case R.id.photo_search_btn:
                 cameraAlert();
                 break;
+            case R.id.voice_search_btn:
+                intent = new Intent(this, VoiceActivity.class);
+                startActivity(intent);
+                break;
+
         }
     }
 

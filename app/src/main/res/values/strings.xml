@@ -21,4 +21,7 @@
     <string name="swipe_help">Fill in the blanks then search for medicine.</string>
     <string name="email_address">Email</string>
     <string name="your_message">Message</string>
+    <string name="speech_start">Talk!</string>
+    <string name="male_or_female">Male or Female</string>
+    <string name="_0_120">0-120</string>
 </resources>

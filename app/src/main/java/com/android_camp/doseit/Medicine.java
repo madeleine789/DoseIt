@@ -1,7 +1,6 @@
 package com.android_camp.doseit;
 
-public class Medicine
-{
+public class Medicine {
     public String warningMessage;
     public double concentration;
     public double dose, kidDose;
@@ -28,7 +27,7 @@ public class Medicine
     }
 
     public double computeResult(String age, double height, double weight) {
-        double d = (age == "kid")  ? kidDose : dose;
+        double d = ( age.equals("kid") )  ? kidDose : dose;
         double h = (height < 10) ? height * 100 : height;
         double result = 0.01 + concentration * d * (h / weight);
         return (result > 0) ? result : -1 * result + 0.01;

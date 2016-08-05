@@ -72,7 +72,6 @@
                 android:maxHeight="100dp"
                 android:layout_weight="30"
                 android:layout_marginTop="10dp"
-                android:onClick="onClickBtn"
                 android:src="@drawable/ic_photo_camera_white_48dp"
                 android:background="@drawable/buttonbackground"
                 android:elevation="2dp"
@@ -80,6 +79,7 @@
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:hint="@string/photo_search_hint"
+                android:onClick="onClickBtn"
                 />
 
             <ImageButton
@@ -89,7 +89,6 @@
                 android:maxHeight="100dp"
                 android:layout_weight="30"
                 android:layout_marginTop="10dp"
-                android:onClick="onClickBtn"
                 android:src="@drawable/ic_keyboard_voice_white_48dp"
                 android:background="@drawable/buttonbackground"
                 android:elevation="2dp"
@@ -97,6 +96,7 @@
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:hint="@string/voice_mode_hint"
+                android:onClick="onClickBtn"
                 />
 
         </LinearLayout>

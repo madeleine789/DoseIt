@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.speech.RecognizerIntent;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 import com.android_camp.doseit.DatabaseHelper;
 import com.android_camp.doseit.Medicine;
 import com.android_camp.doseit.R;
+import com.android_camp.doseit.VoiceActivity;
 import com.android_camp.doseit.fragments.adapter.ListAdapter;
 import com.firebase.client.Firebase;
 
@@ -39,7 +41,8 @@ import java.util.Locale;
 public class FragmentSearchbar extends Fragment implements View.OnClickListener, DatabaseHelper.Help {
 
 
-    public interface CallbackFromSearchFragment {
+
+    public interface MedicineCallBack {
         void onSelectedMedicine(Medicine m);
     }
 
@@ -47,7 +50,7 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
     private ImageButton mSpeakSearchBtn;
     private ImageButton mTextSearchBtn;
     private ListView mMedicineList;
-    private CallbackFromSearchFragment mCallback;
+    private MedicineCallBack mCallback;
     private ListAdapter mListAdapter;
     private ArrayList<Medicine> mList = null;
     private ArrayList<String> mMedName = null;
@@ -56,11 +59,25 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
     private IBinder windowToken;
 
 
+
+    private TextToSpeech textToSpeech;
+    private FragmentParameters.Swipe swiper;
+
+    public FragmentSearchbar(){}
+
+    public void start() {
+        if(getActivity() instanceof VoiceActivity){
+            textToSpeech.speak("Medicine", TextToSpeech.QUEUE_FLUSH, null);
+            mSpeakSearchBtn.callOnClick();
+        }
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -81,6 +98,7 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
         Firebase.setAndroidContext(getContext());
         DatabaseHelper database = new DatabaseHelper();
         database.initDataBase(this);
+
         mTextInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -97,6 +115,7 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
             public void afterTextChanged(Editable editable) {
             }
         });
+
         mTextInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -119,8 +138,22 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
                 return false;
             }
         });
+
+        if(getActivity() instanceof VoiceActivity) {
+            textToSpeech = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
+
+                @Override
+                public void onInit(int status) {
+                    if (status != TextToSpeech.ERROR) {
+                        textToSpeech.setLanguage(Locale.US);
+                    }
+                }
+            });
+            swiper = (FragmentParameters.Swipe) getActivity();
+        }
         return view;
     }
+
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
@@ -157,7 +190,18 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
             case 100: {
                 if (resultCode == Activity.RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    mTextInput.setText(result.get(0));
+                    String res = result.get(0);
+                    mTextInput.setText(res);
+                    textToSpeech.speak(res, TextToSpeech.QUEUE_FLUSH, null);
+
+                    Medicine medicine =  mListAdapter.getMedicine(res);
+                    if(medicine == null) {
+                        swiper.moveToNext(1);
+                    }
+                    else {
+                        mCallback.onSelectedMedicine(medicine);
+                        swiper.moveToNext(2);
+                    }
                 }
                 break;
             }
@@ -176,7 +220,7 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            mCallback = (CallbackFromSearchFragment) activity;
+            mCallback = (MedicineCallBack) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnHeadlineSelectedListener");
@@ -191,8 +235,7 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
         mListAdapter.setMedicineList(mList);
         mMedicineList.setAdapter(mListAdapter);
         mMedicineList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> listView, View itemView, int itemPosition, long itemId)
-            {
+            public void onItemClick(AdapterView<?> listView, View itemView, int itemPosition, long itemId) {
                 mCallback.onSelectedMedicine((Medicine)((ListAdapter)listView.getAdapter()).getItem(itemPosition));
             }
         });

@@ -75,6 +75,18 @@ public class ListAdapter extends BaseAdapter implements Filterable {
         return mFilter;
     }
 
+    public Medicine getMedicine(String res) {
+
+        for(int i = 0; i < mMedicineList.size(); i++){
+            Medicine m = mMedicineList.get(i);
+            if(res.equals(m.name.toLowerCase())){
+                return m;
+            }
+
+        }
+        return null;
+    }
+
     private class MyFilter extends Filter {
 
         @Override
