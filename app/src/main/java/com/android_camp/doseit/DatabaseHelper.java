@@ -9,7 +9,7 @@ public class DatabaseHelper {
     private Firebase ref;
 
     public interface Help {
-        void dealWithData(ArrayList<Medicine> l);
+        void dealWithData(ArrayList<Medicine> l, ArrayList<String> medsName);
     }
     public void initDataBase(final Help h) {
         ref = new Firebase("https://doseit-f8672.firebaseio.com/");
@@ -19,6 +19,7 @@ public class DatabaseHelper {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     ArrayList<Medicine> med = new ArrayList<Medicine>((int) snapshot.getChildrenCount());
+                    ArrayList<String> medsName = new ArrayList<String>((int) snapshot.getChildrenCount());
                     for(DataSnapshot child: snapshot.getChildren()) {
                         Medicine current = new Medicine();
                         current.setName((String) child.child("name").getValue());
@@ -27,9 +28,10 @@ public class DatabaseHelper {
                         current.setKidDose(Double.parseDouble((String) child.child("pedidose").getValue()));
                         current.setDose(Double.parseDouble((String) child.child("dose").getValue()));
                         med.add(current);
+                        medsName.add(current.name);
                     }
                     Log.d("MSG", "Downloading...");
-                    h.dealWithData(med);
+                    h.dealWithData(med, medsName);
                 }
                 @Override
                 public void onCancelled(FirebaseError firebaseError) {

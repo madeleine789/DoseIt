@@ -41,6 +41,7 @@ public class FragmentSearchbar extends Fragment
     private CallbackFromSearchFragment mCallback;
     private ListAdapter mListAdapter;
     private ArrayList<Medicine> mList = null;
+    private ArrayList<String> mMedName = null;
     private Medicine clickedOn;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -135,10 +136,10 @@ public class FragmentSearchbar extends Fragment
         }
     }
     @Override
-
-    public void dealWithData(ArrayList<Medicine> l) {
+    public void dealWithData(ArrayList<Medicine> l, ArrayList<String> medsName) {
         Log.d("MSG", "dealWithDataWorks");
         mList = l;
+        mMedName = medsName;
         mListAdapter.setMedicineList(mList);
         mMedicineList.setAdapter(mListAdapter);
         mMedicineList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
