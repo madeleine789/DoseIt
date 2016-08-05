@@ -1,7 +1,6 @@
 package com.android_camp.doseit.fragments.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,34 +8,26 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.android_camp.doseit.Medicine;
+
 import java.util.ArrayList;
 
-/**
- * Created by demouser on 8/4/16.
- */
 public class ListAdapter extends BaseAdapter implements Filterable {
 
-    private ArrayList<String> mMedicineList;
+    private ArrayList<Medicine> mMedicineList;
     private Context mContext;
     private Filter mFilter;
 
     public ListAdapter(Context ctx) {
-        mMedicineList = new ArrayList<String>();
         mFilter = new MyFilter();
-        mMedicineList.add("Rubbish #1");
-        mMedicineList.add("Rubbiandsh #2");
-        mMedicineList.add("Rubbish #3");
-        mMedicineList.add("Rubbish #4");
-        mMedicineList.add("Rubbish #5");
         mContext = ctx;
     }
 
-    public void setMedicineList(ArrayList<String> list) {
+    public void setMedicineList(ArrayList<Medicine> list) {
         mMedicineList = list;
         notifyDataSetChanged();
     }
-
-    public ArrayList<String> getMedicineList() {
+    public ArrayList<Medicine> getMedicineList() {
         return mMedicineList;
     }
 
@@ -64,7 +55,8 @@ public class ListAdapter extends BaseAdapter implements Filterable {
             tv = (TextView) view;
         }
         tv.setTextSize(30);
-        tv.setText(getItem(i).toString());
+        tv.setText(((Medicine)getItem(i)).name);
+
         return tv;
     }
 
@@ -73,15 +65,29 @@ public class ListAdapter extends BaseAdapter implements Filterable {
         return mFilter;
     }
 
+    public Medicine getMedicine(String res) {
+
+        for(int i = 0; i < mMedicineList.size(); i++){
+            Medicine m = mMedicineList.get(i);
+            if(res.equals(m.name.toLowerCase())){
+                return m;
+            }
+
+        }
+        return null;
+    }
+
     private class MyFilter extends Filter {
 
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
             FilterResults result = new FilterResults();
-            ArrayList<String> newList = new ArrayList<>();
-            for (String medicine : mMedicineList) {
+            ArrayList<Medicine> newList = new ArrayList<>();
+            for (Medicine med : mMedicineList) {
+                String medicine = med.name;
                 if (medicine.toLowerCase().contains(charSequence.subSequence(0, charSequence.length() - 1).toString().toLowerCase())) {
-                    newList.add(medicine);
+                    newList.add(med);
+
                 }
             }
             
@@ -91,7 +97,8 @@ public class ListAdapter extends BaseAdapter implements Filterable {
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            setMedicineList((ArrayList<String>)filterResults.values);
+            setMedicineList((ArrayList<Medicine>)filterResults.values);
+
         }
     }
 }

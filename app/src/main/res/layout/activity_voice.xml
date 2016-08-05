@@ -1,106 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.android_camp.doseit.VoiceActivity"
-    android:orientation="vertical">
+    >
 
-    <!--state-->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/parameters"
-        android:textAlignment="center"
-        android:id="@+id/state"
-        android:padding="10dp"
-        android:textSize="20dp"
-        />
-
-    <!--input needed-->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/gender"
-        android:id="@+id/input"
-        android:padding="10dp"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        />
-
-
-    <!--input inserted-->
-    <!--Gender-->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/gender"
-        android:id="@+id/gender"
-        android:padding="10dp"
-        android:textSize="20sp"
-        />
-    <TextView
+    <fragment android:name="com.android_camp.doseit.fragments.FragmentParameters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/male_or_female"
-        android:id="@+id/gender_value"
-        android:padding="10dp"
-        android:textSize="20sp"
-        />
-
-
-
-
-    <!-- Age -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/age"
-        android:id="@+id/age"
-        android:padding="10dp"
-        android:textSize="20sp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/_0_120"
-        android:id="@+id/age_value"
-        android:padding="10dp"
-        android:textSize="20sp"
-        />
-
-    <!--weight-->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/weight"
-        android:text="@string/weight"
-        android:padding="10dp"
-        android:textSize="20sp"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/weight_value"
-        android:hint="0-100kg"
-        android:padding="10dp"
-        android:textSize="20sp"
-        />
-
-
-
-    <!--<Button-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/btn_speak"-->
-        <!--android:text="@string/speech_start"-->
-        <!--android:padding="10dp"-->
-        <!--android:textSize="20sp"-->
-        <!--/>-->
-
+        android:id="@+id/parameters_fragment"/>
 
 </LinearLayout>
+

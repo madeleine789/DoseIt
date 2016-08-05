@@ -1,142 +1,72 @@
 package com.android_camp.doseit;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.speech.RecognitionListener;
-import android.speech.SpeechRecognizer;
-import android.widget.Button;
-import android.widget.TextView;
-import java.util.ArrayList;
-import java.util.Locale;
-import android.util.Log;
-import android.speech.tts.TextToSpeech;
+import android.support.v4.view.ViewPager;
+
+import com.android_camp.doseit.fragments.FragmentParameters;
+import com.android_camp.doseit.fragments.FragmentResult;
+import com.android_camp.doseit.fragments.FragmentSearchbar;
 
 
-public class VoiceActivity extends BaseActivity {
-
-    private static final String TAG = "HandsFreeDoseIt";
-
-    /* speech */
-    private ConversationHandler ch;
-    private SpeechRecognizer sr;
-    private TextToSpeech tts;
+public class VoiceActivity extends BaseActivity implements FragmentParameters.Swipe, FragmentSearchbar.MedicineCallBack, FragmentParameters.ParametersCallBack {
 
 
-    /* display */
-    TextView state;
-    TextView input;
-    TextView gender;
-    TextView age;
-    TextView weight;
+    private SwipeActivity.ViewPagerAdapter mViewPagerAdapter;
+    private ViewPager mViewPager;
+    private Parameter mParameter;
+    private double dose;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_voice);
+        setContentView(R.layout.activity_swipe);
 
-        if(!sr.isRecognitionAvailable(this))
-            return;
+        initToolBar();
 
-        sr = SpeechRecognizer.createSpeechRecognizer(this);
-        sr.setRecognitionListener(new Listener());
+        mParameter = new Parameter();
+        mViewPagerAdapter = new SwipeActivity.ViewPagerAdapter(getSupportFragmentManager());
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mViewPager.setAdapter(mViewPagerAdapter);
 
-        tts = new TextToSpeech(VoiceActivity.this, new TextToSpeech.OnInitListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             @Override
-            public void onInit(int status) {
-                if(status != TextToSpeech.ERROR) {
-                    tts.setLanguage(Locale.US);
-                    ch = new ConversationHandler(sr, tts, VoiceActivity.this);
-                    ch.start();
+            public void onPageSelected(int position) {
+                if(position == 1) {
+                    FragmentSearchbar fsb = (FragmentSearchbar) mViewPagerAdapter.getItem(1);
+                    fsb.start();
                 }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
             }
         });
+    }
 
-
-        state = (TextView) findViewById(R.id.state);
-        input = (TextView) findViewById(R.id.input);
-        gender = (TextView) findViewById(R.id.gender_value);
-        age = (TextView) findViewById(R.id.age_value);
-        weight = (TextView) findViewById(R.id.weight_value);
-
+    @Override
+    public void moveToNext(int currentScreen) {
+        mViewPager.setCurrentItem(currentScreen, true);
 
     }
 
-    class Listener implements RecognitionListener {
-
-        private static final float MIN_SCORE = -1;
-
-        public void onReadyForSpeech(Bundle params) {
-            Log.d(TAG, "onReadyForSpeech");
-
-        }
-
-        public void onBeginningOfSpeech() {
-            Log.d(TAG, "onBeginningOfSpeech");
-
-        }
-
-        public void onRmsChanged(float rmsdB) {
-            Log.d(TAG, "onRmsChanged");
-
-        }
-
-        public void onBufferReceived(byte[] buffer) {
-            Log.d(TAG, "onBufferReceived");
-
-        }
-
-        public void onEndOfSpeech() {
-            Log.d(TAG, "onEndOfSpeech");
-
-        }
-
-        public void onError(int error) {
-            Log.d(TAG,  "error " +  error);
-        }
-
-        /*
-        * Getting the maximum value result
-        * */
-        public void onResults(Bundle results) {
-
-            ArrayList data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-            float[] scores = results.getFloatArray(SpeechRecognizer.CONFIDENCE_SCORES);
-
-            String result = new String();
-            float maxScore = MIN_SCORE;
-
-            assert (data.size() == scores.length);
-
-            for (int i = 0; i < data.size(); i++) {
-                if(maxScore < scores[i]) {
-                    maxScore = scores[i];
-                    result = (String) data.get(i);
-                }
-            }
-            ch.onResults(result.toUpperCase());
-        }
-
-        public void onPartialResults(Bundle partialResults) {
-            Log.d(TAG, "onPartialResults");
-        }
-
-        public void onEvent(int eventType, Bundle params) {
-            Log.d(TAG, "onEvent " + eventType);
-        }
+    @Override
+    public void onSelectedMedicine(Medicine m) {
+        dose = m.computeResult(mParameter.age, mParameter.height, mParameter.weight);
+        mViewPagerAdapter.setResult(m, dose);
     }
 
-    public void updateDisplay(Display parameters){
-        state.setText(parameters.state.toString());
-        input.setText(parameters.input.toString());
-        gender.setText(parameters.gender.toString());
-        age.setText(parameters.age.toString());
-        weight.setText(String.valueOf(parameters.weight));
 
+    @Override
+    public void setParameters(Parameter p) {
+        mParameter.setAge(p.age);
+        mParameter.setGender(p.gender);
+        mParameter.setWeight(p.weight);
     }
-
 }
 

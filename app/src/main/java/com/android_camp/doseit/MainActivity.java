@@ -1,21 +1,15 @@
 package com.android_camp.doseit;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
-import android.widget.ImageButton;
 
-import com.android_camp.doseit.BaseActivity;
+import com.firebase.client.Firebase;
 
 public class MainActivity extends BaseActivity {
-
-    public static Toolbar toolbar;
+    static {
+        Firebase.getDefaultConfig().setPersistenceEnabled(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +25,7 @@ public class MainActivity extends BaseActivity {
                 intent = new Intent(this, SwipeActivity.class);
                 break;
             case R.id.voice_search_btn:
-                intent = new Intent(getApplicationContext(), VoiceActivity.class);
+                intent = new Intent(this, VoiceActivity.class);
                 break;
 
         }

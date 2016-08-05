@@ -103,24 +103,25 @@
                 android:text="@string/height"
                 android:layout_marginBottom="5dp"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="15sp"/>
+                android:textSize="15sp" android:id="@+id/height_value"/>
             <EditText
                 android:id="@+id/height"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:inputType="numberDecimal"/>
+                android:inputType="number"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/weight"
                 android:layout_marginBottom="5dp"
-                android:textColor="@color/colorPrimaryDark"/>
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"/>
             <EditText
                 android:id="@+id/weight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:textSize="15sp"/>
         </LinearLayout>
     </ScrollView>

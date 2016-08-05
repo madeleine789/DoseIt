@@ -1,27 +1,26 @@
 package com.android_camp.doseit;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-
 import com.android_camp.doseit.fragments.FragmentDummy;
-import com.android_camp.doseit.fragments.FragmentMedsList;
 import com.android_camp.doseit.fragments.FragmentParameters;
 import com.android_camp.doseit.fragments.FragmentResult;
-import com.android_camp.doseit.fragments.SearchbarFragment;
+import com.android_camp.doseit.fragments.FragmentSearchbar;
 
-public class SwipeActivity extends BaseActivity {
+
+public class SwipeActivity extends BaseActivity implements FragmentParameters.ParametersCallBack,
+        FragmentSearchbar.MedicineCallBack {
+
 
     private static final int NO_SWIPER_PAGES = 3;
-
+    private Medicine mSelectedMed;
     private ViewPagerAdapter mViewPagerAdapter;
     private ViewPager mViewPager;
+    private double mResult;
+
+    private Parameter mParameter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +30,27 @@ public class SwipeActivity extends BaseActivity {
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mViewPager.setAdapter(mViewPagerAdapter);
+        mParameter = new Parameter();
+
     }
 
-    public class ViewPagerAdapter extends FragmentPagerAdapter {
+    @Override
+    public void onSelectedMedicine(Medicine m) {
+        mSelectedMed = m;
+        mResult = mSelectedMed.computeResult(mParameter.age, mParameter.height, mParameter.weight);
+        mViewPagerAdapter.setResult(mSelectedMed, mResult);
+        setCurrentItem(2,true);
+
+    }
+
+    public void setCurrentItem (int item, boolean smoothScroll) {
+        mViewPager.setCurrentItem(item, smoothScroll);
+    }
+
+    public static class ViewPagerAdapter extends FragmentPagerAdapter {
+        static FragmentResult mResultFrag;
+        static FragmentParameters mParametersFrag;
+        static FragmentSearchbar mSearchbarFrag;
 
         public ViewPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -41,16 +58,25 @@ public class SwipeActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Fragment fragment;
+            Fragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = new FragmentParameters();
+                    if(mParametersFrag == null){
+                        mParametersFrag = new FragmentParameters();
+                    }
+                    fragment = mParametersFrag;
                     break;
                 case 1:
-                    fragment = new SearchbarFragment();
+                    if(mSearchbarFrag == null) {
+                        mSearchbarFrag = new FragmentSearchbar();
+                    }
+                    fragment = mSearchbarFrag;
                     break;
                 case 2:
-                    fragment = new FragmentResult();
+                    if(mResultFrag == null) {
+                        mResultFrag = new FragmentResult();
+                    }
+                    fragment = mResultFrag;
                     break;
                 default:
                     fragment = new FragmentDummy();
@@ -63,6 +89,16 @@ public class SwipeActivity extends BaseActivity {
         public int getCount() {
             return NO_SWIPER_PAGES;
         }
+
+        public void setResult(Medicine m, double dose) {
+            mResultFrag.setMedName(m.name);
+            mResultFrag.setResult(dose);
+            mResultFrag.setWarning(m.warningMessage);
+        }
     }
 
+    @Override
+    public void setParameters(Parameter p) {
+        mParameter = p;
+    }
 }
