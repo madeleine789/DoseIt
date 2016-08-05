@@ -13,6 +13,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        isMainActivity = true;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initToolBar();

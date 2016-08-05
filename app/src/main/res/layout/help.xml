@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/explain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:text="@string/description_help"
+        android:textColor="@color/colorText"
+        />
+
+    <ImageView
+        android:id="@+id/help_search"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_below="@id/explain"
+        android:src="@drawable/ic_search_white_48dp"
+        android:layout_marginTop="16dp"
+        android:padding="5dp"
+        />
+
+    <TextView
+        android:id="@+id/help_search_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:text="Enter parameters and search with keyboard"
+        android:layout_toRightOf="@id/help_search"
+        android:paddingTop="30dp"
+        android:layout_below="@id/explain"
+        android:textColor="@color/colorText"
+        />
+
+    <ImageView
+        android:id="@+id/help_voice"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_below="@id/help_search"
+        android:src="@drawable/ic_mic_white_48dp"
+        android:padding="5dp"
+        />
+
+    <TextView
+        android:id="@+id/help_voice_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:text="Using microphone to enter parameters"
+        android:paddingTop="15dp"
+        android:layout_below="@id/help_search"
+        android:layout_toRightOf="@id/help_voice"
+        android:textColor="@color/colorText"
+        />
+
+    <ImageView
+        android:id="@+id/help_camera"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_below="@id/help_voice"
+        android:src="@drawable/ic_photo_camera_white_48dp"
+        android:padding="5dp"
+        />
+
+    <TextView
+        android:id="@+id/help_camera_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:text="Take a photo of your medicine for search"
+        android:paddingTop="15dp"
+        android:layout_below="@id/help_voice"
+        android:layout_toRightOf="@id/help_camera"
+        android:textColor="@color/colorText"
+        />
+
+</RelativeLayout>
