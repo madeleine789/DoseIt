@@ -8,15 +8,18 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
 import com.android_camp.doseit.Parameter;
 import com.android_camp.doseit.R;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 
 /**
  * Created by demouser on 8/4/16.
@@ -27,12 +30,13 @@ public class FragmentParameters extends Fragment  {
     RadioGroup age;
     EditText height;
     EditText weight;
+    public boolean itPressed = false;
     Parameter p = new Parameter();
 
     private callBack myListner;
 
     public interface callBack{
-        public void getParameters(Parameter p);
+        public void getParameters(Parameter p, boolean t);
     }
 
     @Override
@@ -52,7 +56,7 @@ public class FragmentParameters extends Fragment  {
         super.onStart();
 
         age = (RadioGroup) getActivity().findViewById(R.id.age_group);
-        Log.d("MSC",age==null?"null":"ago");
+        //Log.d("MSC",age==null?"null":"ago");
         if (age != null) {
             age.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
@@ -68,7 +72,7 @@ public class FragmentParameters extends Fragment  {
                     }
                     p.setAge(age);
                     Log.d("MSC","SetAge");
-                    myListner.getParameters(p);
+                    myListner.getParameters(p, true);
                 }
             });
         }
@@ -88,7 +92,7 @@ public class FragmentParameters extends Fragment  {
                             break;
                     }
                     p.setGender(gender);
-                    myListner.getParameters(p);
+                    myListner.getParameters(p, true);
                 }
             });
         }
@@ -104,9 +108,9 @@ public class FragmentParameters extends Fragment  {
 
                 @Override
                 public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                    double height = (s.toString().isEmpty()) ? 170.0 : Double.parseDouble(s.toString());
+                    double height = (s.toString().isEmpty()) ? -1 : Double.parseDouble(s.toString());
                     p.setHeight(height);
-                    myListner.getParameters(p);
+                    myListner.getParameters(p, true);
                 }
 
                 @Override
@@ -117,22 +121,18 @@ public class FragmentParameters extends Fragment  {
 
         weight = (EditText) getActivity().findViewById(R.id.weight);
         if (weight != null)
-            weight.addTextChangedListener(new TextWatcher() {
+            weight.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                    double weight = (s.toString().isEmpty()) ? 60.0 : Double.parseDouble(s.toString());
+                public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                    double weight = (textView.getText().toString().isEmpty()) ? -1 :
+                            Double.parseDouble(textView.getText().toString());
                     p.setWeight(weight);
-                    myListner.getParameters(p);
-                }
 
-                @Override
-                public void afterTextChanged(Editable editable) {
-
+                    if (i == EditorInfo.IME_ACTION_DONE || i == EditorInfo.IME_ACTION_GO) {
+                        itPressed = true;
+                    }
+                    myListner.getParameters(p, itPressed);
+                    return true;
                 }
             });
     }

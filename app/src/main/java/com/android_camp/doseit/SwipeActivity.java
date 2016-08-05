@@ -8,6 +8,7 @@ import com.android_camp.doseit.fragments.FragmentDummy;
 import com.android_camp.doseit.fragments.FragmentParameters;
 import com.android_camp.doseit.fragments.FragmentResult;
 import com.android_camp.doseit.fragments.FragmentSearchbar;
+
 public class SwipeActivity extends BaseActivity implements FragmentParameters.callBack,
         FragmentSearchbar.CallbackFromSearchFragment {
     private static final int NO_SWIPER_PAGES = 3;
@@ -18,6 +19,11 @@ public class SwipeActivity extends BaseActivity implements FragmentParameters.ca
     private FragmentResult frag;
     private FragmentParameters mParametersFrag;
     private Parameter mParameter;
+
+    SwipeActivity() {
+        mParameter = new Parameter();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +76,16 @@ public class SwipeActivity extends BaseActivity implements FragmentParameters.ca
         }
     }
     @Override
-    public void getParameters(Parameter p) {
-        mParameter = p;
+    public void getParameters(Parameter p, boolean itPressed) {
+        if( p != null) {
+            mParameter = p;
+            if (mParameter != null &&
+                    !mParameter.gender.equals("value") &&
+                    !mParameter.age.equals("value") &&
+                    mParameter.height != -1 &&
+                    mParameter.weight != -1) {
+                setCurrentItem(1, true);
+            }
+        }
     }
 }

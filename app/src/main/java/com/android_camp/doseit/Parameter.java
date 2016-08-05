@@ -9,6 +9,13 @@ public class Parameter {
     double height;
     String age;
 
+    public Parameter() {
+        this.setGender("value");
+        this.setAge("value");
+        this.setWeight(-1);
+        this.setHeight(-1);
+    }
+
     public void setGender(String g) {
         gender = g;
     }
