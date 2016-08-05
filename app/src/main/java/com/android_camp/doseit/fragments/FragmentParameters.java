@@ -27,7 +27,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.TextView;
 
+import org.w3c.dom.Text;
 
 
 public class FragmentParameters extends Fragment {
@@ -66,27 +68,22 @@ public class FragmentParameters extends Fragment {
     private RadioGroup age;
     private EditText height;
 
+    public FragmentParameters(){}
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-
-        View view = inflater.inflate(R.layout.fragment_parameters, container, false);
         myListener = (ParametersCallBack) getActivity();
+
 
         if(getActivity() instanceof VoiceActivity){
 
             swiper = (Swipe) getActivity();
             final VoiceActivity activity = (VoiceActivity) getActivity();
 
-            if (!speechRecognizer.isRecognitionAvailable(activity))
-                return view;
+//            if (!speechRecognizer.isRecognitionAvailable(activity))
+//                return view;
 
             speechRecognizer = SpeechRecognizer.createSpeechRecognizer(activity);
             speechRecognizer.setRecognitionListener(new ParameterListener());
@@ -103,13 +100,28 @@ public class FragmentParameters extends Fragment {
                 }
             });
 
-            male = (RadioButton) view.findViewById(R.id.male);
-            female = (RadioButton) view.findViewById(R.id.female);
-            child = (RadioButton) view.findViewById(R.id.kid);
-            adult = (RadioButton) view.findViewById(R.id.adult);
-            weight = (EditText) view.findViewById(R.id.weight);
-
         }
+    }
+
+
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_parameters, container, false);
+
+        TextView height_value = (TextView) view.findViewById(R.id.height_value);
+        EditText h = (EditText) view.findViewById(R.id.height);
+        height_value.setVisibility(View.GONE);
+        h.setVisibility(View.GONE);
+
+
+        male = (RadioButton) view.findViewById(R.id.male);
+        female = (RadioButton) view.findViewById(R.id.female);
+        child = (RadioButton) view.findViewById(R.id.kid);
+        adult = (RadioButton) view.findViewById(R.id.adult);
+        weight = (EditText) view.findViewById(R.id.weight);
 
         return view;
     }
@@ -191,9 +203,7 @@ public class FragmentParameters extends Fragment {
             weight.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
                 }
-
                 @Override
                 public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                     double weight = (s.toString().isEmpty()) ? 60.0 : Double.parseDouble(s.toString());
@@ -342,6 +352,7 @@ public class FragmentParameters extends Fragment {
             try{
                 double w = Double.parseDouble(result);
                 weight.setText(String.valueOf(w));
+                textToSpeech.speak(weight.getText().toString(), TextToSpeech.QUEUE_ADD, null);
                 nextParam();
             }catch (NumberFormatException e){
                 askParameter();
@@ -377,10 +388,12 @@ public class FragmentParameters extends Fragment {
             }
             if(result.startsWith("F")) {
                 female.setChecked(true);
+                textToSpeech.speak("Female", TextToSpeech.QUEUE_FLUSH, null);
                 nextParam();
             }
             else if(result.startsWith("M")){
                 male.setChecked(true);
+                textToSpeech.speak("Male", TextToSpeech.QUEUE_FLUSH, null);
                 nextParam();
             }
             else {
@@ -394,11 +407,16 @@ public class FragmentParameters extends Fragment {
                 double age = Double.parseDouble(result);
                 if(age <= 15) {
                     child.setChecked(true);
+                    textToSpeech.speak("Child", TextToSpeech.QUEUE_ADD, null);
                 }
                 else{
                     adult.setChecked(true);
+                    textToSpeech.speak("Adult", TextToSpeech.QUEUE_ADD, null);
+
                 }
                 nextParam();
+
+
             }catch (NumberFormatException e){
                 askParameter();
             }
@@ -449,16 +467,16 @@ public class FragmentParameters extends Fragment {
 
             switch (currentParam){
                 case GENDER: /* first parameter */
-                    textToSpeech.speak(Params.GENDER.toString(), TextToSpeech.QUEUE_FLUSH, null);
+                    textToSpeech.speak(Params.GENDER.toString(), TextToSpeech.QUEUE_ADD, null);
                     break;
                 case WEIGHT:
-                    textToSpeech.speak(Params.WEIGHT.toString(), TextToSpeech.QUEUE_FLUSH, null);
+                    textToSpeech.speak(Params.WEIGHT.toString(), TextToSpeech.QUEUE_ADD, null);
                     break;
                 case AGE:
-                    textToSpeech.speak(Params.AGE.toString(), TextToSpeech.QUEUE_FLUSH, null);
+                    textToSpeech.speak(Params.AGE.toString(), TextToSpeech.QUEUE_ADD, null);
                     break;
                 case DONE:
-                    textToSpeech.speak("Say OK to confirm", TextToSpeech.QUEUE_FLUSH, null);
+                    textToSpeech.speak("Say OK to confirm", TextToSpeech.QUEUE_ADD, null);
                     break;
                 default:
                     throw new IllegalStateException();

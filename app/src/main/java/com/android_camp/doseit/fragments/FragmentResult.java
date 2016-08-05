@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class FragmentResult extends Fragment {
+
     private double answer = 0;
     private String name = "";
     private String warn = "";
@@ -33,6 +34,9 @@ public class FragmentResult extends Fragment {
     private SpeechRecognizer speechRecognizer;
     private static final String BACK = "back";
     private static final String BACK_SPEECH = "Say back for more medicines";
+
+
+    public FragmentResult(){}
 
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -97,8 +101,6 @@ public class FragmentResult extends Fragment {
         this.name = name;
         if(mMedicine != null) {
             mMedicine.setText(String.valueOf(this.name));
-            textToSpeech.speak(this.name, TextToSpeech.QUEUE_ADD, null);
-            textToSpeech.speak("", TextToSpeech.QUEUE_ADD, null);
 
         }
     }
@@ -106,8 +108,9 @@ public class FragmentResult extends Fragment {
     public void setResult(double result) {
         answer = result;
         if(mResult != null) {
+            String toSpeak = String.format("%.5g%n", result) + " milligrams";
             mResult.setText(String.format("%.5g%n", result) + " mg");
-            textToSpeech.speak(mResult.getText().toString(), TextToSpeech.QUEUE_ADD, null);
+            textToSpeech.speak(toSpeak, TextToSpeech.QUEUE_ADD, null);
             textToSpeech.speak("", TextToSpeech.QUEUE_ADD, null);
 
         }

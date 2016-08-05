@@ -51,6 +51,7 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
     private TextToSpeech textToSpeech;
     private FragmentParameters.Swipe swiper;
 
+    public FragmentSearchbar(){}
 
     public void start() {
         if(getActivity() instanceof VoiceActivity){
@@ -154,10 +155,10 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
                     if(medicine == null) {
                         swiper.moveToNext(1);
                     }
-
-                    mCallback.onSelectedMedicine(medicine);
-                    swiper.moveToNext(2);
-
+                    else {
+                        mCallback.onSelectedMedicine(medicine);
+                        swiper.moveToNext(2);
+                    }
                 }
                 break;
             }

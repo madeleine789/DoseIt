@@ -2,6 +2,7 @@ package com.android_camp.doseit;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import com.android_camp.doseit.fragments.FragmentParameters;
 import com.android_camp.doseit.fragments.FragmentResult;
@@ -19,6 +20,8 @@ public class VoiceActivity extends BaseActivity implements FragmentParameters.Sw
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        Log.i("VoiceActivity", "create");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
 

@@ -13,6 +13,9 @@ import com.android_camp.doseit.R;
  * Created by demouser on 8/4/16.
  */
 public class FragmentDummy extends Fragment {
+
+    public FragmentDummy(){}
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+
 import com.android_camp.doseit.fragments.FragmentDummy;
 import com.android_camp.doseit.fragments.FragmentParameters;
 import com.android_camp.doseit.fragments.FragmentResult;
@@ -25,6 +27,8 @@ public class SwipeActivity extends BaseActivity implements FragmentParameters.Pa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("SwipeActivity", "create");
+
         setContentView(R.layout.activity_swipe);
         initToolBar();
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -48,12 +52,16 @@ public class SwipeActivity extends BaseActivity implements FragmentParameters.Pa
     }
 
     public static class ViewPagerAdapter extends FragmentPagerAdapter {
-        static FragmentResult mResultFrag;
-        static FragmentParameters mParametersFrag;
-        static FragmentSearchbar mSearchbarFrag;
+        static FragmentResult mResultFrag = null;
+        static FragmentParameters mParametersFrag = null;
+        static FragmentSearchbar mSearchbarFrag = null;
+
+
 
         public ViewPagerAdapter(FragmentManager fm) {
             super(fm);
+            Log.i("ViewPagerAdapter", "create");
+
         }
 
         @Override
