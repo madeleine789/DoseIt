@@ -17,4 +17,6 @@
     <string name="text_search_hint">Proceed to text search</string>
     <string name="photo_search_hint">Proceed to camera</string>
     <string name="voice_mode_hint">Proceed to voice mode</string>
+    <string name="description_help">To calculate dosage, enter patient\'s parameters and select medicine in 3 possible ways:</string>
+    <string name="swipe_help">Fill in the blanks then search for medicine.</string>
 </resources>

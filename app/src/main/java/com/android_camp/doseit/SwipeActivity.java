@@ -26,6 +26,7 @@ public class SwipeActivity extends BaseActivity implements FragmentParameters.ca
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        isMainActivity = false;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
         initToolBar();
