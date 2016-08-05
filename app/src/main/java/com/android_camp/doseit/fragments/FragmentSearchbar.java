@@ -18,6 +18,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -50,6 +51,7 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
     private ArrayList<Medicine> mList = null;
     private ArrayList<String> mMedName = null;
     private Medicine clickedOn;
+    private boolean onTablet = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,12 +63,16 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_searchbar, container, false);
         mTextInput = (AutoCompleteTextView) view.findViewById(R.id.search_input);
+        Button b = (Button) view.findViewById(R.id.forTablet);
+        onTablet = (b != null);
+
         mSpeakSearchBtn = (ImageButton) view.findViewById(R.id.voice_search);
         mTextSearchBtn = (ImageButton) view.findViewById(R.id.text_search);
         mTextSearchBtn.setOnClickListener(this);
         mSpeakSearchBtn.setOnClickListener(this);
         mMedicineList = (ListView) view.findViewById(R.id.list_meds);
         mListAdapter = new ListAdapter(getContext());
+        mListAdapter.setOnTablet(onTablet);
         Firebase.setAndroidContext(getContext());
         DatabaseHelper database = new DatabaseHelper();
         database.initDataBase(this);

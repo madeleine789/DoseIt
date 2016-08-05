@@ -18,6 +18,7 @@ public class ListAdapter extends BaseAdapter implements Filterable {
     private ArrayList<Medicine> mMedicineList;
     private Context mContext;
     private Filter mFilter;
+    private boolean onTablet;
 
     public ListAdapter(Context ctx) {
         mFilter = new MyFilter();
@@ -62,9 +63,10 @@ public class ListAdapter extends BaseAdapter implements Filterable {
         } else {
             tv = (TextView) view;
         }
-        tv.setTextSize(30);
         tv.setText(((Medicine)getItem(i)).name);
-
+        tv.setPadding(10,10,10,10);
+        if (onTablet) tv.setTextSize(30);
+        else tv.setTextSize(15);
         return tv;
     }
 
@@ -96,5 +98,9 @@ public class ListAdapter extends BaseAdapter implements Filterable {
             setMedicineList((ArrayList<Medicine>)filterResults.values);
 
         }
+    }
+
+    public void setOnTablet(boolean onTablet) {
+        this.onTablet = onTablet;
     }
 }

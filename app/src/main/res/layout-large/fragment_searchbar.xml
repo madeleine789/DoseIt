@@ -12,12 +12,19 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="20">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/forTablet"
+            />
 
         <ImageButton
             android:id="@+id/text_search"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:background="@drawable/whitesurface"
             android:drawablePadding="22dp"
             android:padding="16dp"
@@ -27,7 +34,7 @@
         <AutoCompleteTextView
             android:id="@+id/search_input"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:background="@drawable/whitesurface"
             android:drawablePadding="22dp"
             android:gravity="left|center"
@@ -36,11 +43,12 @@
             android:layout_weight="80"
             android:imeOptions="actionSearch"
             android:inputType="text"
+            android:textSize="35sp"
             />
         <ImageButton
             android:id="@+id/voice_search"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:background="@drawable/whitesurface"
             android:drawablePadding="22dp"
             android:padding="16dp"
@@ -52,7 +60,11 @@
     <ListView
         android:id="@+id/list_meds"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:layout_weight="80"
+        android:layout_gravity="bottom"
+        android:padding="16dp"
+        android:background="@drawable/whitesurface">
     </ListView>
 
 </LinearLayout>

@@ -13,7 +13,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="20">
 
         <ImageButton
             android:id="@+id/text_search"
@@ -37,6 +38,7 @@
             android:layout_weight="80"
             android:imeOptions="actionSearch"
             android:inputType="text"
+            android:textSize="18sp"
             />
         <ImageButton
             android:id="@+id/voice_search"
@@ -49,19 +51,14 @@
             android:layout_weight="10"
             android:onClick="onClick"/>
     </LinearLayout>
-
-    <TextView
-        android:padding="16dp"
-        android:textSize="35sp"
-        android:text="List of Medicine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <ListView
         android:id="@+id/list_meds"
         android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:layout_weight="80"
+        android:layout_gravity="bottom"
+        android:background="@drawable/whitesurface">
     </ListView>
 
 </LinearLayout>
