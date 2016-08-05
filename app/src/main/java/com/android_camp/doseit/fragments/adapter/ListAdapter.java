@@ -14,16 +14,25 @@ import java.util.ArrayList;
 
 public class ListAdapter extends BaseAdapter implements Filterable {
 
+    private ArrayList<Medicine> mOriginalList;
     private ArrayList<Medicine> mMedicineList;
     private Context mContext;
     private Filter mFilter;
+    private boolean onTablet;
 
     public ListAdapter(Context ctx) {
         mFilter = new MyFilter();
         mContext = ctx;
     }
 
+    public void reset() {
+        mMedicineList = mOriginalList;
+    }
+
     public void setMedicineList(ArrayList<Medicine> list) {
+        if (mOriginalList == null) {
+            mOriginalList = list;
+        }
         mMedicineList = list;
         notifyDataSetChanged();
     }
@@ -54,9 +63,10 @@ public class ListAdapter extends BaseAdapter implements Filterable {
         } else {
             tv = (TextView) view;
         }
-        tv.setTextSize(30);
         tv.setText(((Medicine)getItem(i)).name);
-
+        tv.setPadding(10,10,10,10);
+        if (onTablet) tv.setTextSize(30);
+        else tv.setTextSize(15);
         return tv;
     }
 
@@ -88,5 +98,9 @@ public class ListAdapter extends BaseAdapter implements Filterable {
             setMedicineList((ArrayList<Medicine>)filterResults.values);
 
         }
+    }
+
+    public void setOnTablet(boolean onTablet) {
+        this.onTablet = onTablet;
     }
 }
