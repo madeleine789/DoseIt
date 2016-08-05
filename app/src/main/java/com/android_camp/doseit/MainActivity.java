@@ -13,6 +13,7 @@ public class MainActivity extends BaseActivity {
         Firebase.getDefaultConfig().setPersistenceEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initToolBar();
     }
 
     public void onClickBtn(View view) {
