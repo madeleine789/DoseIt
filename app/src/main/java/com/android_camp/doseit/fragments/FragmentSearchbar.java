@@ -51,7 +51,6 @@ public class FragmentSearchbar extends Fragment implements View.OnClickListener,
     private ListAdapter mListAdapter;
     private ArrayList<Medicine> mList = null;
     private ArrayList<String> mMedName = null;
-    private Medicine clickedOn;
     private boolean onTablet = false;
     private InputMethodManager imm;
     private IBinder windowToken;

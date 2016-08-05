@@ -30,6 +30,7 @@ public class Medicine
     public double computeResult(String age, double height, double weight) {
         double d = (age == "kid")  ? kidDose : dose;
         double h = (height < 10) ? height * 100 : height;
-        return 0.01 + concentration * d * (h / weight);
+        double result = 0.01 + concentration * d * (h / weight);
+        return (result > 0) ? result : -1 * result + 0.01;
     }
 }
