@@ -7,10 +7,12 @@ import android.view.View;
 import com.firebase.client.Firebase;
 
 public class MainActivity extends BaseActivity {
+    static {
+        Firebase.getDefaultConfig().setPersistenceEnabled(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Firebase.getDefaultConfig().setPersistenceEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
