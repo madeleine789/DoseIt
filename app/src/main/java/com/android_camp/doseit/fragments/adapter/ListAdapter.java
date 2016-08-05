@@ -1,7 +1,6 @@
 package com.android_camp.doseit.fragments.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,11 +9,9 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.android_camp.doseit.Medicine;
+
 import java.util.ArrayList;
 
-/**
- * Created by demouser on 8/4/16.
- */
 public class ListAdapter extends BaseAdapter implements Filterable {
 
     private ArrayList<Medicine> mMedicineList;

@@ -15,7 +15,7 @@ public class SwipeActivity extends BaseActivity implements FragmentParameters.ca
     private ViewPagerAdapter mViewPagerAdapter;
     private ViewPager mViewPager;
     private double mResult;
-    private FragmentResult frag;
+    private FragmentResult mResultFrag;
     private FragmentParameters mParametersFrag;
     private Parameter mParameter;
     @Override
@@ -32,9 +32,9 @@ public class SwipeActivity extends BaseActivity implements FragmentParameters.ca
         mSelectedMed = m;
         mResult = mSelectedMed.computeResult(mParameter.age, mParameter.height, mParameter.weight);
         setCurrentItem(2,true);
-        frag.setResult(mResult);
-        frag.setMedName(mSelectedMed.name);
-        frag.setWarning(mSelectedMed.warningMessage);
+        mResultFrag.setResult(mResult);
+        mResultFrag.setMedName(mSelectedMed.name);
+        mResultFrag.setWarning(mSelectedMed.warningMessage);
     }
     public void setCurrentItem (int item, boolean smoothScroll) {
         mViewPager.setCurrentItem(item, smoothScroll);
@@ -55,8 +55,8 @@ public class SwipeActivity extends BaseActivity implements FragmentParameters.ca
                     fragment = new FragmentSearchbar();
                     break;
                 case 2:
-                    frag = new FragmentResult();
-                    fragment = frag;
+                    mResultFrag = new FragmentResult();
+                    fragment = mResultFrag;
                     break;
                 default:
                     fragment = new FragmentDummy();

@@ -1,9 +1,5 @@
 package com.android_camp.doseit;
 
-/**
- * Created by demouser on 8/4/16.
- */
-
 public class Medicine
 {
     public String warningMessage;

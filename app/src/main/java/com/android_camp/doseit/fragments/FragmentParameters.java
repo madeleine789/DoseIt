@@ -18,9 +18,6 @@ import com.android_camp.doseit.Parameter;
 import com.android_camp.doseit.R;
 import android.view.View.OnClickListener;
 
-/**
- * Created by demouser on 8/4/16.
- */
 public class FragmentParameters extends Fragment  {
 
     RadioGroup gender;
