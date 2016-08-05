@@ -17,6 +17,7 @@ import java.util.ArrayList;
  */
 public class ListAdapter extends BaseAdapter implements Filterable {
 
+    private ArrayList<Medicine> mOriginalList;
     private ArrayList<Medicine> mMedicineList;
     private Context mContext;
     private Filter mFilter;
@@ -26,7 +27,14 @@ public class ListAdapter extends BaseAdapter implements Filterable {
         mContext = ctx;
     }
 
+    public void reset() {
+        mMedicineList = mOriginalList;
+    }
+
     public void setMedicineList(ArrayList<Medicine> list) {
+        if (mOriginalList == null) {
+            mOriginalList = list;
+        }
         mMedicineList = list;
         notifyDataSetChanged();
     }
