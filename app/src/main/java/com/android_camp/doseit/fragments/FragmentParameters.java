@@ -2,12 +2,17 @@ package com.android_camp.doseit.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.renderscript.Double2;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
@@ -15,8 +20,6 @@ import com.android_camp.doseit.Parameter;
 import com.android_camp.doseit.R;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
-import android.view.View.OnFocusChangeListener;
-import android.widget.Toast;
 
 public class FragmentParameters extends Fragment  {
 
@@ -93,66 +96,42 @@ public class FragmentParameters extends Fragment  {
 
 
         height = (EditText) getActivity().findViewById(R.id.height);
-        if (height != null) {
-            height.setOnFocusChangeListener(new OnFocusChangeListener() {
+        if (height != null)
+            height.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void onFocusChange(View textView, boolean hasFocus) {
-                    if (!hasFocus) {
-                        if (textView != null) {
-                            String h = ((TextView)textView).getText().toString();
-                            if (!h.isEmpty() && h.matches("[0-9.]*")) {
-                                double height = Double.parseDouble(h);
-                                if (height > 80 && height < 250) {
-                                    p.setHeight(height);
-                                    myListner.getParameters(p, true);
-                                    return;
-                                }
-                            }
-                            height.setText("");
-                            Toast toast = Toast.makeText(getActivity(),"Height should be a real number between 80 and 250",Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                    }
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                    double height = (s.toString().isEmpty()) ? -1 : Double.parseDouble(s.toString());
+                    p.setHeight(height);
+                    myListner.getParameters(p, true);
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
                 }
             });
-            height.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    height.setText("");
-                }
-            });
-        }
 
         weight = (EditText) getActivity().findViewById(R.id.weight);
-        if (weight != null) {
-            weight.setOnFocusChangeListener(new OnFocusChangeListener() {
+        if (weight != null)
+            weight.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
-                public void onFocusChange(View textView, boolean hasFocus) {
-                    if (!hasFocus) {
-                        if (textView != null) {
-                            String h = ((TextView)textView).getText().toString();
-                            if (!h.isEmpty() && h.matches("[0-9.]*")) {
-                                double weight = Double.parseDouble(h);
-                                if (weight > 20 && weight < 250) {
-                                    p.setWeight(weight);
-                                    myListner.getParameters(p, true);
-                                    return;
-                                }
-                            }
-                            weight.setText("");
-                            Toast toast = Toast.makeText(getActivity(),"Weight should be a real number between 20 and 250",Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
+                public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                    double weight = (textView.getText().toString().isEmpty()) ? -1 :
+                            Double.parseDouble(textView.getText().toString());
+                    p.setWeight(weight);
+
+                    if (i == EditorInfo.IME_ACTION_DONE || i == EditorInfo.IME_ACTION_GO) {
+                        itPressed = true;
                     }
+                    myListner.getParameters(p, itPressed);
+                    return true;
                 }
             });
-            weight.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    weight.setText("");
-                }
-            });
-        }
     }
 
     @Override
