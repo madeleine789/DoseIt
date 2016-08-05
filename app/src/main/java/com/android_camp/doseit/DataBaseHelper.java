@@ -1,36 +1,25 @@
 package com.android_camp.doseit;
-
 import android.util.Log;
-
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-
 import java.util.ArrayList;
-
-public class DataBaseHelper {
+public class DatabaseHelper {
     private Firebase ref;
 
     public interface Help {
-        void dealWithData(ArrayList<Medicine> l);
+        void dealWithData(ArrayList<Medicine> l, ArrayList<String> medsName);
     }
-
     public void initDataBase(final Help h) {
-//        Log.d("MSG", "Downloading...");
-
-        Firebase.getDefaultConfig().setPersistenceEnabled(true);
-
         ref = new Firebase("https://doseit-f8672.firebaseio.com/");
-
-        if(ref != null) {
+        if(ref != null ) {
             ref.keepSynced(true);
-
             ref.child("medicine").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
-
                     ArrayList<Medicine> med = new ArrayList<Medicine>((int) snapshot.getChildrenCount());
+                    ArrayList<String> medsName = new ArrayList<String>((int) snapshot.getChildrenCount());
                     for(DataSnapshot child: snapshot.getChildren()) {
                         Medicine current = new Medicine();
                         current.setName((String) child.child("name").getValue());
@@ -39,11 +28,11 @@ public class DataBaseHelper {
                         current.setKidDose(Double.parseDouble((String) child.child("pedidose").getValue()));
                         current.setDose(Double.parseDouble((String) child.child("dose").getValue()));
                         med.add(current);
+                        medsName.add(current.name);
                     }
                     Log.d("MSG", "Downloading...");
-                    h.dealWithData(med);
+                    h.dealWithData(med, medsName);
                 }
-
                 @Override
                 public void onCancelled(FirebaseError firebaseError) {
                     Log.d(this.getClass().getName(), "The read failed: " + firebaseError.getMessage());
@@ -54,6 +43,4 @@ public class DataBaseHelper {
             Log.d(this.getClass().getName(), "Internet connection is needed to get the database for the first time");
         }
     }
-
-
 }
